@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<body>
+<% include admin/header.ejs %>
+
+<div id="wrapper">
+
+    <% include navbarUser.ejs %>
+
+    <div id="page-wrapper">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" style="text-align:center">Area Statistics</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <div class="row">
+            <div class="jumbotron">
+                <div class="container">
+
+                    <p class="text-center">
+                        <b>Do you know enough about your city?</b><br>
+                        Want to be updated with the current environmental statistics of your area?? View results of our smart statistical analysis below.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class= "row">
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <a id ="btnTreePlanted" href="#">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <span class="glyphicon glyphicon-tree-deciduous fa-4x" style="color:white"></span>
+                                </div>
+                                <div class="col-xs-9 text-center">
+                                    <div><h4 style="color:white">TREES PLANTED</h4></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <a id ="btnTreeDiversity" href="#">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-tree fa-4x" style="color:white"></i>
+                                </div>
+                                <div class="col-xs-9 text-center">
+                                    <div><h4 style="color:white">TREE DIVERSITY</h4></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <a id="btnPollution" href="#">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-bar-chart-o   fa-4x" style="color:white"></i>
+                                </div>
+                                <div class="col-xs-9 text-center">
+                                    <div><h4 style="color:white">POLLUTION DETAILS </h4></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <a id="btnTreeSuit" href="#">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <span class="glyphicon glyphicon-tree-conifer fa-4x" style="color:white"></span>
+                                </div>
+                                <div class="col-xs-9 text-center">
+                                    <div><h4 style="color:white">TREE SUITABILITY </h4></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class = "row" id="dropdownrow" hidden>
+            <div class="col-lg-12">
+                <div class="btn-group btn-down">
+
+                    Select Area:
+
+                    <select id='areadropdown' >
+                        <option value="Golden Gate">Golden Gate</option>
+                        <option value="Napa">Napa</option>
+                        <option value="Noe Valley">Noe Valley</option>
+                        <option value="Outer Richmond">Outer Richmond</option>
+                        <option value="Chinatown">Chinatown</option>
+                        <option value="Union Square">Union Square</option>
+                        <option value="Western Addition">Western Addition</option>
+                        <option value="Russian Hill">Russian Hill</option>
+                        <option value="Union Square">Union Square</option>
+                        <option value="Peninsula">Peninsula</option>
+                        <option value="Cole Valley">Cole Valley</option>
+
+                    </select>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class ="col-md-6">
+                <div class="panel panel-default" id="treePlantedPanel" hidden>
+                    <div class="panel-heading">
+                        Trees Planted in Last 3 Months
+                    </div>
+                    <table width="100%" id="treePlantedTable" class="table table-striped table-bordered table-hover">
+
+                    </table>
+                </div>
+
+                <div class="panel panel-default" id="treeDiversityPanel" hidden>
+                    <div class="panel-heading">
+                        Tree Diversity in Your Area
+                    </div>
+                    <table width="100%" id="treeDiversityTable" class="table table-striped table-bordered table-hover">
+
+                    </table>
+                </div>
+
+                <div class="panel panel-default" id="pollutionDetailsPanel" hidden>
+                    <div class="panel-heading">
+                        Pollution Details in Your Area
+                    </div>
+                    <table width="100%" id="pollutionDetailsTable" class="table table-striped table-bordered table-hover">
+
+                    </table>
+                </div>
+
+                <div class="panel panel-default" id="treeSuitPanel" hidden>
+                    <div class="panel-heading">
+                        Tree Suitability of Your Area
+                    </div>
+                    <table width="100%" id="treeSuitTable" class="table table-striped table-bordered table-hover">
+
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel-default" id="chartPlanted" hidden>
+                    <h1 class="page-header">Analysis of Trees Planted</h1>
+                    <div class="panel-body">
+                        <canvas id= "treePlantedChart" width="400" height="400"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="panel-default" id="chartDiversity" hidden>
+                    <h1 class="page-header">Analysis of Trees Planted</h1>
+                    <div class="panel-body">
+                        <canvas id= "treeDiversityChart" width="400" height="400"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="panel-default" id="chartPollution" hidden>
+                    <h1 class="page-header">Analysis of Pollution</h1>
+                    <div class="panel-body">
+                        <canvas id= "pollutionChart" width="400" height="400"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="panel-default" id="chartSuit" hidden>
+                    <h1 class="page-header">Analysis of Trees Suitability</h1>
+                    <div class="panel-body">
+                        <canvas id= "treeSuitChart" width="400" height="400"></canvas>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <!-- /.row -->
+
+        <!-- /.row -->
+
+    </div>
+
+    <!-- /#page-wrapper -->
+</div>
+</div>
+
+
+
+
+
+</body>
+
+
+
+<script>
+
+
+
+    jQuery(document).ready(function () {
+
+        var myChartAQIPast;
+        var myChartAQICurrent;
+        var myChart2;
+
+        jQuery("#btnTreePlanted").click(function () {
+
+            $("#treePlantedPanel").show();
+            $("#chartPlanted").show();
+
+            $("#treeDiversityPanel").hide();
+            $("#pollutionDetailsPanel").hide();
+            $("#treeSuitPanel").hide();
+            $("#chartDiversity").hide();
+            $("#chartPollution").hide();
+            $("#chartSuit").hide();
+
+
+
+
+            $.get('/treesplanted',  function (data) {
+
+                var dataSet = data.chartdata;
+
+                var dataset = data.chartdata;
+                $('#treePlantedTable').DataTable({
+                    select: true,
+                    active: true,
+                    data: dataset,
+                    destroy:true,
+                    ordering:true,
+                    columns: [
+                        {title: "Area Name"},
+                        {title: "Area ID"},
+                        {title: "Count of Trees"}
+                    ]
+                });
+
+                var ctx = document.getElementById("treePlantedChart");
+                var treePlanted = new Chart(ctx, {
+                        type: 'bar',
+                        labels: ['Area Name', 'Count of Trees'],
+                        options:{
+                            legend:
+                                {
+                                    display:false
+                                }
+                        },
+                        data: {
+                            labels: [dataSet[0][0], dataSet[1][0], dataSet[2][0], dataSet[3][0], dataSet[4][0], dataSet[5][0], dataSet[6][0], dataSet[7][0], dataSet[8][0], dataSet[9][0]],
+
+                            datasets: [{
+
+                                data: [dataSet[0][2], dataSet[1][2], dataSet[2][2], dataSet[3][2], dataSet[4][2], dataSet[5][2], dataSet[6][2], dataSet[7][2], dataSet[8][2], dataSet[9][2]],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1}]
+
+                        }
+                    }
+
+                );
+
+            });
+
+
+        });
+
+        jQuery("#btnTreeDiversity").click(function () {
+
+            $("#treePlantedPanel").hide();
+            $("#chartPlanted").hide();
+
+            $("#treeDiversityPanel").show();
+            $("#pollutionDetailsPanel").hide();
+            $("#treeSuitPanel").hide();
+            $("#chartDiversity").show();
+            $("#chartPollution").hide();
+            $("#chartSuit").hide();
+            $("#dropdownrow").show();
+
+            $.get('/treediversity', {data: document.getElementById('areadropdown').value}, function (data) {
+
+                var dataset = data.chartdata;
+                var dataSet= data.chartdata;
+
+                $('#treeDiversityTable').DataTable({
+                    select: true,
+                    active: true,
+                    data: dataset,
+                    destroy: true,
+                    ordering:true,
+                    columns: [
+                        {title: "Area Name"},
+                        {title: "Area ID"},
+                        {title: "Species ID"},
+                        {title: "Tree Count"}
+
+                    ]
+                });
+
+                var ctx1 = document.getElementById("treeDiversityChart");
+                var treePlanted = new Chart(ctx1, {
+                        type: 'pie',
+                        labels: ['Species Name', 'Count of Trees'],
+                        options:{
+                            legend:
+                                {
+                                    display:false
+                                }
+                        },
+                        data: {
+                            labels: [dataSet[0][2], dataSet[1][2], dataSet[2][2] ],
+
+                            datasets: [{
+
+                                data: [dataSet[0][3], dataSet[1][3], dataSet[2][3]],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1}]
+
+                        }
+                    }
+
+                );
+
+            });
+
+        });
+
+        jQuery("#btnPollution").click(function () {
+
+
+            $("#treePlantedPanel").hide();
+            $("#chartPlanted").hide();
+
+            $("#treeDiversityPanel").hide();
+            $("#pollutionDetailsPanel").show();
+            $("#treeSuitPanel").hide();
+            $("#chartDiversity").hide();
+            $("#chartPollution").show();
+            $("#chartSuit").hide();
+            $("#dropdownrow").show();
+
+            $.get('/pollutiongases', {data: document.getElementById('areadropdown').value}, function (data) {
+                debugger;
+
+                var dataSet = data.chartdata;
+
+
+                var dataset = data.chartdata;
+
+                $('#pollutionDetailsTable').DataTable({
+                    select: true,
+                    active: true,
+                    data: dataset,
+                    ordering:true,
+                    destroy: true,
+                    columns: [
+                        {title: "Area Name"},
+                        {title: "Current AQI"},
+                        {title: "CO2"},
+                        {title: "CO"},
+                        {title: "NO2"},
+                        {title: "SO"}
+                    ]
+                });
+
+                var ctx2 = document.getElementById("pollutionChart");
+                var treePlanted = new Chart(ctx2, {
+                        type: 'pie',
+                        labels: ['Current AQI', 'CO2', 'CO', 'NO2','SO'],
+                        options:{
+                            legend:
+                                {
+                                    display:false
+                                }
+                        },
+                        data: {
+                            labels: [ 'Current AQI', 'CO2', 'CO', 'NO2','SO'],
+
+                            datasets: [{
+
+                                data: [dataSet[0][1], dataSet[0][2], dataSet[0][3],dataSet[0][4]],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1}]
+
+                        }
+                    }
+
+                );
+
+
+            });
+
+        });
+
+        jQuery("#btnTreeSuit").click(function () {
+
+
+            $("#treePlantedPanel").hide();
+            $("#chartPlanted").hide();
+
+            $("#treeDiversityPanel").hide();
+            $("#pollutionDetailsPanel").hide();
+            $("#treeSuitPanel").show();
+            $("#chartDiversity").hide();
+            $("#chartPollution").hide();
+            $("#chartSuit").show();
+            $("#dropdownrow").show();
+
+            $.get('/treesuitarea', {data: document.getElementById('areadropdown').value}, function (data) {
+
+
+                var dataset = data.chartdata;
+                $('#treeSuitTable').DataTable({
+                    select: true,
+                    active: true,
+                    data: dataset,
+                    ordering:false,
+                    destroy: true,
+                    columns: [
+                        {title: "Species Name"}
+
+                    ]
+                });
+            });
+
+        });
+
+
+
+
+    });
+
+
+
+</script>
+</html>

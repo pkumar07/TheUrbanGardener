@@ -1,0 +1,37 @@
+.btn-down{
+    margin-bottom: 20px;
+
+}
+
+#img_container {
+    position:relative;
+    display:inline-block;
+    text-align:center;
+    border:1px solid red;
+}
+
+.carbtn {
+    position:absolute;
+    bottom:100px;
+    left:300px;
+    width:100px;
+    height:30px;
+}
+
+.indexh3 {
+    margin: 0px;
+}
+
+.carousel-caption{
+    bottom: 300px;
+}
+
+
+#success_message{ display: none;}
+
+
+
+
+
+
+

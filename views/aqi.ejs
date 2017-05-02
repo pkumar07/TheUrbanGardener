@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<body>
+<% include admin/header.ejs %>
+
+<div id="wrapper">
+
+    <% include navbarUser.ejs %>
+
+    <div id="page-wrapper">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header" style="text-align:center;">Air Quality Analysis</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <div class="row">
+            <div class="jumbotron">
+                <div class="container">
+
+                    <p class="text-center">
+                        <b>What is Air Quality Index?</b><br>
+                        An air quality index (AQI) is an index used for reporting daily air quality. It is used to determine how polluted the air quality is.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class= "row">
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <a id ="btnaqipast" href="#">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-bar-chart-o fa-5x" style="color:white"></i>
+                                </div>
+                                <div class="col-xs-9 text-center">
+                                    <div><h3 style="color:white">PAST TRENDS OF YOUR AREA</h3></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <a id="btnaqicompare" href="#">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-table fa-5x" style="color:white"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div><h3 style="color:white">COMPARE PAST TRENDS</h3></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <a id="btnaqicurrent" href="#">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-signal fa-5x" style="color:white"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div><h3 style="color:white">COMPARE WITH TOP 5 AREAS</h3></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class = "row">
+            <div class="col-lg-12"  align="center">
+                <div class="btn-group btn-down">
+
+                  <p class="lead"> Select Area:
+
+                    <select id='areadropdown' class="form-control-inline">
+                        <option value="Golden Gate">Golden Gate</option>
+                        <option value="Napa">Napa</option>
+                        <option value="Noe Valley">Noe Valley</option>
+                        <option value="Outer Richmond">Outer Richmond</option>
+                        <option value="Chinatown">Chinatown</option>
+                        <option value="Union Square">Union Square</option>
+                        <option value="Western Addition">Western Addition</option>
+                        <option value="Russian Hill">Russian Hill</option>
+                        <option value="Union Square">Union Square</option>
+                        <option value="Peninsula">Peninsula</option>
+                        <option value="Cole Valley">Cole Valley</option>
+
+                    </select>
+                  </p>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class ="col-md-6">
+                <div class="panel panel-default" id="pastaqi" hidden>
+                    <div class="panel-heading">
+                        Past AQI Trends
+                    </div>
+                    <table width="100%" id="pastaqitable" class="table table-striped table-bordered table-hover">
+
+                    </table>
+                </div>
+
+                <div class="panel panel-default" id="youvstop5" hidden>
+                    <div class="panel-heading">
+                        Your Area vs Top 5
+                    </div>
+                    <table width="100%" id="top5aqitable" class="table table-striped table-bordered table-hover">
+
+                    </table>
+                </div>
+
+                <div class="panel panel-default" id="currentaqi" hidden>
+                    <div class="panel-heading">
+                        View Current Trends
+                    </div>
+                    <table width="100%" id="currentaqitable" class="table table-striped table-bordered table-hover">
+
+                    </table>
+                </div>
+
+
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="panel panel-default" id="chartPastAQI" hidden>
+                    <div class="panel-heading">Analysis of Trees Planted</div>
+
+                    <div class="panel-body">
+                        <canvas id= "pastaqichart" width="400" height="400"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="panel panel-default" id="chartYouvsTop5" hidden>
+
+                    <div class="panel-heading">Compare Past Trends of Top 4 Areas</div>
+                    <div class="panel-body">
+                        <canvas id= "youvstop5chart" width="400" height="400"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="panel panel-default" id="chartcurrentaqi" hidden>
+                    <div class="panel-heading">Compare Current AQI with Top 5 Areas</div>
+                    <div class="panel-body">
+                        <canvas id= "currentaqichart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+<script>
+
+
+
+    jQuery(document).ready(function () {
+
+
+        jQuery("#btnaqipast").click(function () {
+
+            $("#pastaqi").show();
+            $("#currentaqi").hide();
+            $("#youvstop5").hide();
+            $("#chartPastAQI").show();
+            $("#chartYouvsTop5").hide();
+            $("#currentaqichart").hide();
+
+
+            $.get('/yourarea/aqi/pasttrends', {data: document.getElementById('areadropdown').value}, function (data) {
+
+                var dataset = data.chartdata;
+                var dataSet = data.chartdata;
+
+
+                $('#pastaqitable').DataTable({
+                    select: true,
+                    active: true,
+                    data: dataset,
+                    destroy:true,
+                    ordering:true,
+                    columns: [
+                        {title: "Area ID"},
+                        {title: "AQI"},
+                        {title: "Month"}
+                    ]
+                });
+
+                var ctx1 = document.getElementById("pastaqichart");
+                var treePlanted = new Chart(ctx1, {
+                        type: 'bar',
+
+                        labels: ['Current AQI', 'Month'],
+                        options:{
+                            scales:{
+                                yAxes:[{
+                                    ticks:{
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                            legend:
+                                {
+                                    display:false
+                                }
+                        },
+                        data: {
+                            labels: [dataSet[0][2], dataSet[1][2], dataSet[2][2],dataSet[3][2],dataSet[4][2],dataSet[5][2],dataSet[6][2],dataSet[7][2],dataSet[8][2], dataSet[9][2] ],
+
+                            datasets: [{
+
+                                data: [dataSet[0][1], dataSet[1][1], dataSet[2][1],dataSet[3][1],dataSet[4][1],dataSet[5][1],dataSet[6][1],dataSet[7][1],dataSet[8][1],dataSet[9][1]],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 99, 132, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(255,99,132,1)',
+                                    'rgba(255,99,132,1)',
+                                    'rgba(255,99,132,1)',
+                                    'rgba(255,99,132,1)',
+                                    'rgba(255,99,132,1)',
+                                    'rgba(255,99,132,1)'
+                                    ,'rgba(255,99,132,1)'
+                                    ,'rgba(255,99,132,1)'
+                                    ,'rgba(255,99,132,1)'
+
+                                ],
+                                borderWidth: 1}]
+
+                        }
+                    }
+
+                );
+
+            });
+
+
+        });
+
+        jQuery("#btnaqicompare").click(function () {
+
+
+            $("#pastaqi").hide();
+            $("#currentaqi").hide();
+            $("#youvstop5").show();
+            $("#chartPastAQI").hide();
+            $("#chartYouvsTop5").show();
+            $("#currentaqichart").hide();
+
+
+
+            $.get('/yourarea/aqi/trendtopfive', {data: document.getElementById('areadropdown').value}, function (data) {
+
+                var title = data.tabledata;
+                var dataset = data.chartdata;
+                var dataSet = data.chartdata;
+                //console.log("hi before");
+                $('#top5aqitable').DataTable({
+                    select: true,
+                    active: true,
+                    data: dataset,
+                    destroy: true,
+                    ordering:true,
+                    columns: [
+                        {title: "Date"},
+                        {title: "Peninsula"},
+                        {title: "Golden Gate"},
+                        {title: "Cole Valley"},
+                        {title: "Napa"},
+                        {title: "Chinatown"}
+
+                    ]
+                });
+                //console.log("hi");
+                var ctx = document.getElementById("youvstop5chart");
+
+                console.log(ctx);
+                //window.alert("chart created");
+                var treePlanted = new Chart(ctx, {
+                    type: 'bar',
+
+                    labels: ['Current AQI', 'Month'],
+                    options:{
+                        scales:{
+                            yAxes:[{
+                                ticks:{
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        legend:
+                            {
+                                display:false
+                            }
+                    },
+                    data: {
+                        labels: [dataSet[0][0], dataSet[1][0], dataSet[2][0],dataSet[3][0]],
+
+                        datasets: [{
+                            label:'Peninsula',
+                            data: [dataSet[0][1], dataSet[1][1], dataSet[2][1],dataSet[3][1]],
+                            backgroundColor: [
+                                'rgba(115, 199, 132, 0.2)',
+                                'rgba(115, 199, 132, 0.2)',
+                                'rgba(115, 199, 132, 0.2)',
+                                'rgba(115, 199, 132, 0.2)',
+
+                            ],
+                            borderWidth: 1}
+
+                            ,
+                            {
+                                label:'Golden Gate',
+                                data: [dataSet[0][2], dataSet[1][2], dataSet[2][2],dataSet[3][2]],
+                                backgroundColor: [
+                                    'rgba(54, 62, 235, 0.2)',
+                                    'rgba(54, 62, 235, 0.2)',
+                                    'rgba(54, 62, 235, 0.2)',
+                                    'rgba(54, 62, 235, 0.2)',
+                                ],
+
+                                borderWidth: 1},
+                            {
+                                label:'Cole Valley',
+                                data: [dataSet[0][3], dataSet[1][3], dataSet[2][3],dataSet[3][3]],
+                                backgroundColor: [
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+
+                                ],
+
+                                borderWidth: 1},
+
+                            {
+                                label:'Napa',
+                                data: [dataSet[0][4], dataSet[1][4], dataSet[2][4],dataSet[3][4]],
+                                backgroundColor: [
+                                    'rgba(135, 92, 92, 0.2)',
+                                    'rgba(135, 92, 92, 0.2)',
+                                    'rgba(135, 92, 92, 0.2)',
+                                    'rgba(135, 92, 92, 0.2)'
+                                ],
+
+                                borderWidth: 1},
+
+                            {
+                                label:'Chinatown',
+                                data: [dataSet[0][5], dataSet[1][5], dataSet[2][5],dataSet[3][5]],
+                                backgroundColor: [
+                                    'rgba(216, 99, 179, 0.2)',
+                                    'rgba(216, 99, 179, 0.2)',
+                                    'rgba(216, 99, 179, 0.2)',
+                                    'rgba(216, 99, 179, 0.2)'
+
+
+                                ],
+
+                                borderWidth: 1}
+
+
+
+                        ]
+
+                    }
+
+                });
+                //window.alert("data fed");
+
+            });
+
+        });
+
+        jQuery("#btnaqicurrent").click(function () {
+
+
+            $("#pastaqi").hide();
+            $("#currentaqi").show();
+            $("#youvstop5").hide();
+            $("#chartPastAQI").hide();
+            $("#chartYouvsTop5").hide();
+            $("#chartcurrentaqi").show();
+
+
+            $.get('/yourarea/aqi/currenttopfive', {data: document.getElementById('areadropdown').value}, function (data) {
+                debugger;
+                var dataset = data.chartdata;
+                var dataSet = data.chartdata;
+
+
+                $('#currentaqitable').DataTable({
+                    select: true,
+                    active: true,
+                    data: dataset,
+                    ordering:false,
+                    destroy: true,
+                    columns: [
+                        {title: "Areas"},
+                        {title: "Current AQI"},
+                        {title: "Month"}
+                    ]
+                });
+
+                var ctx2 = document.getElementById("currentaqichart");
+                var treePlanted = new Chart(ctx2, {
+                        type: 'bar',
+
+                        labels: ['Area', 'Current AQI'],
+                        options:{
+                            scales:{
+                                yAxes:[{
+                                    ticks:{
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                            legend:
+                                {
+                                    display:false
+                                }
+                        },
+                        data: {
+                            labels: ["Outer Richmond", "Napa", "Noe Valley", "Golden Gate", "Cole Valley", "Western Addition" ],
+
+                            datasets: [{
+
+                                data: [dataSet[0][1], dataSet[1][1], dataSet[2][1],dataSet[3][1],dataSet[4][1],dataSet[5][1]],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(55, 199, 132, 0.2)',
+                                    'rgba(155, 9, 132, 0.2)',
+                                    'rgba(225, 197, 12, 0.2)',
+                                    'rgba(145, 159, 32, 0.2)',
+                                    'rgba(135, 49, 12, 0.2)'
+
+                                ],
+
+
+                                borderWidth: 1}]
+
+                        }
+                    }
+
+                );
+            });
+
+        });
+
+
+
+    });
+
+
+
+</script>
+
+
+
+
+
+</html>
